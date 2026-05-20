@@ -1,36 +1,42 @@
 <div align="center">
-  <img src="banner.png" alt="Multiversa OS Banner" width="100%">
+  <img src="banner.png" alt="Multiversa Lab Banner" width="100%">
   
-  # Multiversa OS
-  **Ecosistemas Inteligentes & Orquestación Universal Humano+IA**
+  # Multiversa Lab
+  **The Core Engine for Universal AI Orchestration**
 </div>
 
-## 🌐 Visión General
+## 🌐 Overview
 
-Multiversa OS no es solo un asistente de código, es un **Sistema Operativo Inteligente Personal**. A través de una arquitectura agnóstica multiplataforma, unifica el contexto, la memoria y las habilidades de Inteligencia Artificial para que te sigan a cualquier entorno de desarrollo (IDE) o interfaz conversacional.
+**Multiversa Lab** is the open-source technical foundation where all source code, AI orchestration logic, and experimental development environments run. It is strictly separated from **Multiversa Group** (the business entity), serving solely as the engine room for the Intelligent Personal OS.
 
-### Pilares Fundamentales
-1. **Contexto Compartido Universal:** Sincronización de estado en tiempo real. Tu ecosistema es el mismo en Cursor, Claude Code, Gemini, etc.
-2. **Memoria Persistente (Engram):** Aprendizaje continuo y registro de decisiones arquitectónicas.
-3. **Mapeo de Conocimiento (Graphify):** Ingestión de proyectos completos a través de grafos semánticos.
-4. **Disciplina Operativa (Gentle SDD):** Spec-Driven Development (desarrollo impulsado por especificaciones) para garantizar calidad antes de escribir una línea de código.
-5. **Simulación (MiroFish):** Pruebas de escenarios pre-lanzamiento.
+This repository provides an agnostic, multi-platform runtime environment (Mac, Linux, WSL) that unifies Context, Persistent Memory, and Spec-Driven Development (SDD) across any IDE or LLM interface.
 
-## 🚀 Instalación Rápida (Multiversa Lab)
+### Core Architecture
+- **MultiversaOS (Shared Context):** Synchronizes state universally.
+- **Memory Persistence (Engram):** Logs architectural decisions.
+- **Knowledge Mapping (Graphify):** Semantic ingestion of active repositories.
+- **Operational Harness (Gentle SDD):** Enforces disciplined software development pipelines.
 
-Este repositorio contiene el `multiversa-installer.sh`, el cual inicializa el entorno `~/.multiversa` en tu sistema local (Mac, Linux, WSL).
+## 🚀 Getting Started
+
+The installer initializes your local `~/.multiversa` ecosystem:
 
 ```bash
 chmod +x multiversa-installer.sh
 ./multiversa-installer.sh
 ```
 
-El instalador te guiará de manera interactiva para definir tu rol y configurar tu entorno bajo el ecosistema "Lab" (Open Source) o "Ecosistemas Inteligentes" (Tier avanzado).
+## 📚 Documentation
 
-## 🗂 Estructura de Proyecto Inicial
-- `/templates`: Archivos de configuración pre-establecidos para Engram, Graphify y Gentle AI.
-- `/projects`: Zona de orquestación donde se inicializan nuevos clientes o desarrollos (Ej: `cintia-larizzati`).
+For complete installation guides, architecture overviews, and API references, please read our [Documentation](./docs).
+
+## ⚖️ License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## 🤝 Code of Conduct
+
+We are committed to fostering a welcoming and highly professional environment. Please read our `CODE_OF_CONDUCT.md` before participating.
 
 ---
-*Diseñado bajo los estándares premium de **Multiversa Ecosistemas Inteligentes**.*
-*"Humano + IA, escalando el infinito."*
+*Built in the Lab. Scaled by Multiversa Group.*
