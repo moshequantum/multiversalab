@@ -2,12 +2,27 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 import { createClient } from '@insforge/sdk';
 
+// ============================================================
 // Server-side InsForge client using the admin/service API key.
-// This file only runs on Vercel serverless — the API key never reaches the browser.
-const insforge = createClient({
-  baseUrl: env.INSFORGE_API_BASE_URL || 'https://uzyhdq3q.us-east.insforge.app',
-  anonKey: env.INSFORGE_API_KEY || '***ROTATED_REDACTED***'
-});
+// Runs ONLY in Vercel serverless functions — never in the browser.
+//
+// 🚨 NEVER hardcode any key here as a fallback. If the env vars are
+//    missing, fail loudly. A broken endpoint is better than a leaked
+//    key in source control.
+// ============================================================
+
+const baseUrl = env.INSFORGE_API_BASE_URL;
+const apiKey = env.INSFORGE_API_KEY;
+
+if (!baseUrl || !apiKey) {
+  console.error(
+    '[waitlist] Missing INSFORGE_API_BASE_URL or INSFORGE_API_KEY in environment. ' +
+      'Set them in .env locally and in Vercel project settings.'
+  );
+}
+
+const insforge =
+  baseUrl && apiKey ? createClient({ baseUrl, anonKey: apiKey }) : null;
 
 const VALID_PLANS = new Set([
   'Lab (Open R&D)',
@@ -16,6 +31,13 @@ const VALID_PLANS = new Set([
 ]);
 
 export const POST: RequestHandler = async ({ request }) => {
+  if (!insforge) {
+    return json(
+      { ok: false, error: 'Backend no configurado. Avisanos por correo.' },
+      { status: 503 }
+    );
+  }
+
   let body: { name?: string; email?: string; plan_interest?: string };
   try {
     body = await request.json();
@@ -42,6 +64,7 @@ export const POST: RequestHandler = async ({ request }) => {
       name,
       email,
       plan_interest: plan,
+      source: 'lab.multiversa.group',
       created_at: new Date().toISOString()
     }
   ]);
@@ -52,7 +75,7 @@ export const POST: RequestHandler = async ({ request }) => {
       {
         ok: false,
         error:
-          'No pudimos registrarte ahora. Si el problema persiste, escribinos a soymoisesweb@gmail.com.'
+          'No pudimos registrarte ahora. Si persiste, escribinos a soymoisesweb@gmail.com.'
       },
       { status: 500 }
     );
