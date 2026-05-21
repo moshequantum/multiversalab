@@ -11,7 +11,12 @@
       <span class="g g-rose">✦</span>
     </div>
 
-    <div class="wordmark mv-chrome">MULTIVERSA</div>
+    <img
+      src="/assets/multiversa-wordmark-light.svg"
+      alt="Multiversa"
+      class="wordmark-img"
+    />
+    <span class="lab-suffix">Lab</span>
 
     <p class="line">
       <em>Architected by Moshe. Open to the curious.</em>
@@ -66,12 +71,23 @@
   .g-teal   { color: var(--mv-aureon); }
   .g-rose   { color: var(--mv-runa); }
 
-  .wordmark {
-    font-family: var(--font-serif);
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    font-size: clamp(3rem, 10vw, 8rem);
-    line-height: 1;
+  .wordmark-img {
+    height: clamp(40px, 7vw, 80px);
+    width: auto;
+    display: block;
+    opacity: 0.95;
+  }
+
+  .lab-suffix {
+    font-family: var(--font-mono);
+    font-size: clamp(11px, 1.2vw, 13px);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--mv-primary);
+    padding: 4px 12px;
+    border: 1px solid rgba(189, 235, 52, 0.3);
+    border-radius: 999px;
+    background: rgba(189, 235, 52, 0.04);
   }
 
   .line {

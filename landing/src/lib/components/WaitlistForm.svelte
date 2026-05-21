@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { insforge } from '$lib/insforge';
-
+  // Posts to /api/waitlist (server-side) so the InsForge admin key never reaches
+  // the client bundle. See landing/src/routes/api/waitlist/+server.ts.
   let name = $state('');
   let email = $state('');
   let planInterest = $state('Lab (Open R&D)');
@@ -27,18 +27,15 @@
     errorMessage = '';
 
     try {
-      const { data, error } = await insforge.database
-        .from('founders_waitlist')
-        .insert([
-          {
-            name,
-            email,
-            plan_interest: planInterest
-          }
-        ]);
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, plan_interest: planInterest })
+      });
+      const data = await res.json();
 
-      if (error) {
-        throw error;
+      if (!data.ok) {
+        throw new Error(data.error || 'No pudimos registrarte ahora.');
       }
 
       status = 'success';

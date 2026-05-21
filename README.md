@@ -97,6 +97,35 @@ Explore the detailed architecture guides in the [`docs/`](./docs) directory:
 *   [Gentle AI / GentlePI (Spec-Driven Development)](./docs/gentle.md)
 *   [MiroFish (Agent Scenario Swarm)](./docs/mirofish.md)
 *   [InsForge (BaaS cloud integration)](./docs/insforge.md)
+*   [**Upstream / Standing on the shoulders**](./docs/upstream.md) — authors, repos, licenses
+
+---
+
+## 🙏 Standing on the shoulders / Sobre los hombros
+
+> *"Crédito donde corresponde."* — Multiversa DNA Brand · Cap I · Principios
+
+Multiversa Lab does not reinvent the wheel — it **orchestrates**. Five of the
+six pillars stand on open-source work by other builders. Full attribution
+lives in [`docs/upstream.md`](./docs/upstream.md). Brief credit here:
+
+| Pillar | Upstream project | Author | License |
+|---|---|---|---|
+| **Engram** | [`Gentleman-Programming/engram`](https://github.com/Gentleman-Programming/engram) | Alan Muscaglia ([@Gentleman-Programming](https://github.com/Gentleman-Programming)) | MIT |
+| **Gentle AI** | [`Gentleman-Programming/gentle-ai`](https://github.com/Gentleman-Programming/gentle-ai) | Alan Muscaglia ([@Gentleman-Programming](https://github.com/Gentleman-Programming)) | MIT |
+| **Gentle PI** | [`Gentleman-Programming/gentle-pi`](https://github.com/Gentleman-Programming/gentle-pi) | Alan Muscaglia ([@Gentleman-Programming](https://github.com/Gentleman-Programming)) | MIT |
+| **MiroFish** | [`666ghj/MiroFish`](https://github.com/666ghj/MiroFish) · [mirofish.homes](https://mirofish.homes/) | BaiFu ([@666ghj](https://github.com/666ghj)) | **AGPL-3.0** ⚠️ |
+| **Graphify** | [`safishamsi/graphify`](https://github.com/safishamsi/graphify) | Safi ([@safishamsi](https://github.com/safishamsi)) | MIT |
+| **InsForge** | [insforge.dev](https://insforge.dev) | InsForge (BaaS) | Commercial |
+
+> **MiroFish is AGPL-3.0** (copyleft, viral over network service). Multiversa
+> Lab runs it locally and is itself open-source — fully compatible. The
+> commercial Multiversa Group _mentions_ MiroFish but does not embed its
+> code; if it ever does, that portion will be open-sourced in compliance.
+> See [`docs/upstream.md`](./docs/upstream.md) for the full reasoning.
+
+If you want to improve one of these pillars, please open a PR **on the
+original repository**. We are grateful users who document — not a fork.
 
 ---
 
