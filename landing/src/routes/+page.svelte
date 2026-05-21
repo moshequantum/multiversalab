@@ -5,6 +5,7 @@
   import Pillars from '$lib/components/Pillars.svelte';
   import StatusBoard from '$lib/components/StatusBoard.svelte';
   import PhilosophySplit from '$lib/components/PhilosophySplit.svelte';
+  import WaitlistForm from '$lib/components/WaitlistForm.svelte';
   import FooterTriad from '$lib/components/FooterTriad.svelte';
 </script>
 
@@ -19,6 +20,7 @@
   <Pillars />
   <StatusBoard />
   <PhilosophySplit />
+  <WaitlistForm />
 </main>
 <FooterTriad />
 

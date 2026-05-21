@@ -12,6 +12,7 @@
     summary: string;
     detail: string;
     status: 'READY' | 'WIP' | 'ROADMAP';
+    docLink: string;
   };
 
   const pillars: Pillar[] = [
@@ -21,10 +22,11 @@
       code: 'LAYER 01',
       layer: 'MEMORY',
       name: 'Engram',
-      nameEn: 'Memory',
-      summary: 'Capa de memoria con contexto separado por proyecto.',
+      nameEn: 'Memory Context',
+      summary: 'Persistencia de memoria con contexto separado por proyecto.',
       detail: 'Guarda lo que decides, no lo que escribes. No reemplaza tu base de datos; recuerda por qué llegaste a ella.',
-      status: 'WIP'
+      status: 'READY',
+      docLink: 'https://github.com/moshequantum/multiversalab/blob/main/docs/engram.md'
     },
     {
       glyph: '✦',
@@ -32,10 +34,11 @@
       code: 'LAYER 02',
       layer: 'KNOWLEDGE',
       name: 'Graphify',
-      nameEn: 'Knowledge map',
-      summary: 'Cualquier input a grafo de conocimiento navegable.',
-      detail: 'Ingestamos codebases, docs y sistemas enteros. Reduce token bloat, gana comprensión holística antes de proponer cambios.',
-      status: 'WIP'
+      nameEn: 'Knowledge Graph',
+      summary: 'Ingesta automática de código y documentación a grafos.',
+      detail: 'Mapea de forma visual importaciones, queries de BD y dependencias de código para reducir el token bloat y ganar velocidad.',
+      status: 'READY',
+      docLink: 'https://github.com/moshequantum/multiversalab/blob/main/docs/graphify.md'
     },
     {
       glyph: '◎',
@@ -43,10 +46,11 @@
       code: 'LAYER 03',
       layer: 'DISCIPLINE',
       name: 'GentleAI',
-      nameEn: 'Discipline (SDD)',
-      summary: 'Spec-Driven Development como harness operacional.',
-      detail: 'Si no está documentado, no existe. Specs antes de código, tests antes de commit. Persona: el_gentleman.',
-      status: 'READY'
+      nameEn: 'SDD Harness',
+      summary: 'Spec-Driven Development como harness de desarrollo.',
+      detail: 'Evita el código roto. Enmarca el ciclo del agente AI en fases estrictas: Investigación, Especificación y Ejecución.',
+      status: 'READY',
+      docLink: 'https://github.com/moshequantum/multiversalab/blob/main/docs/gentle.md'
     },
     {
       glyph: '✦',
@@ -54,10 +58,11 @@
       code: 'LAYER 04',
       layer: 'PERSONAL',
       name: 'GentlePI',
-      nameEn: 'Personal intelligence',
-      summary: 'La capa que amplifica al individuo o a la empresa.',
-      detail: 'Voz, contexto, decisiones humanas. La IA debería sonar como tú, no como ChatGPT.',
-      status: 'WIP'
+      nameEn: 'Personal Intelligence',
+      summary: 'Personalización de agente con el criterio del programador.',
+      detail: 'Infunde el tono, estilo y reglas de el_gentleman en tu agente de programación local.',
+      status: 'READY',
+      docLink: 'https://github.com/moshequantum/multiversalab/blob/main/docs/gentle.md'
     },
     {
       glyph: '◎',
@@ -65,10 +70,11 @@
       code: 'LAYER 05',
       layer: 'SIMULATION',
       name: 'MiroFish',
-      nameEn: 'Predictive simulation',
-      summary: 'Simula antes de desplegar. Predice antes de decidir.',
-      detail: 'Inteligencia de enjambre para validar escenarios y optimizar estrategias. Tier Ecosistemas.',
-      status: 'ROADMAP'
+      nameEn: 'Scenario Swarm',
+      summary: 'Simulaciones paralelas de comportamiento de agentes.',
+      detail: 'Puebla mundos simulados basados en OASIS para predecir conversiones, probar copy y validar reglas antes de compilar.',
+      status: 'READY',
+      docLink: 'https://github.com/moshequantum/multiversalab/blob/main/docs/mirofish.md'
     },
     {
       glyph: '⬡',
@@ -76,10 +82,11 @@
       code: 'LAYER 06',
       layer: 'INFRASTRUCTURE',
       name: 'InsForge',
-      nameEn: 'Forge / Backend',
-      summary: 'La forja de infraestructura del laboratorio.',
-      detail: 'Backend, integraciones, auth y storage para que los cerebros de trabajo aterricen en producción sin reescribir cada vez.',
-      status: 'WIP'
+      nameEn: 'Infrastructure BaaS',
+      summary: 'Forja backend y sincronización universal en la nube.',
+      detail: 'Base de datos relacional Postgres, Storage, Autenticación y pasarela de IA para albergar cerebros de trabajo.',
+      status: 'READY',
+      docLink: 'https://github.com/moshequantum/multiversalab/blob/main/docs/insforge.md'
     }
   ];
 </script>
@@ -98,8 +105,7 @@
         <em>los seis pilares del laboratorio.</em>
       </h2>
       <p class="lead">
-        Cada pilar es una capa con su propio alcance, su propia memoria
-        y su propio criterio. Se orquestan, no se confunden.
+        Cada pilar representa una capa robusta con alcance, memoria y criterio propio. Explora su documentación técnica haciendo clic en sus enlaces.
       </p>
     </div>
 
@@ -124,6 +130,12 @@
           <p class="summary">{p.summary}</p>
 
           <p class="detail">{p.detail}</p>
+
+          <div class="card-action">
+            <a href={p.docLink} target="_blank" rel="noopener" class="doc-btn">
+              Ver Specs Técnicos &nbsp;↗
+            </a>
+          </div>
         </article>
       {/each}
     </div>
@@ -155,12 +167,18 @@
   .grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 24px;
   }
   @media (min-width: 768px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1280px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 
-  .pillar { display: flex; flex-direction: column; gap: 18px; }
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    height: 100%;
+    justify-content: space-between;
+  }
 
   .pillar.glow-violet { box-shadow: 0 0 60px rgba(168, 148, 255, 0.04); }
   .pillar.glow-teal   { box-shadow: 0 0 60px rgba(78, 205, 196, 0.04); }
@@ -237,6 +255,38 @@
     margin: 0;
     border-left: 2px solid rgba(255, 255, 255, 0.08);
     padding-left: 14px;
+    flex-grow: 1;
+  }
+
+  .card-action {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .doc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--mv-ivory);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .doc-btn:hover {
+    background: var(--mv-primary-dim);
+    border-color: var(--mv-primary);
+    color: var(--mv-primary);
+    box-shadow: var(--shadow-chartreuse-soft);
   }
 
   .foot {

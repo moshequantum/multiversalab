@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "sveltekit",
+  "buildCommand": "pnpm --filter multiversalab-landing build",
+  "outputDirectory": "landing/build",
+  "installCommand": "pnpm install",
+  "cleanUrls": true,
+  "trailingSlash": false
+}

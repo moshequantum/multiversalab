@@ -1,0 +1,13 @@
+{
+  "_comment": "Copy this to .mcp.json (gitignored) and fill in real keys. NEVER commit .mcp.json.",
+  "mcpServers": {
+    "insforge": {
+      "command": "npx",
+      "args": ["-y", "@insforge/mcp@latest"],
+      "env": {
+        "API_KEY": "ik_paste_your_admin_key_here",
+        "API_BASE_URL": "https://<your-project>.us-east.insforge.app"
+      }
+    }
+  }
+}

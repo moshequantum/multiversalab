@@ -19,21 +19,30 @@ echo -e "${BLUE}====================================================${NC}"
 echo -e "${GREEN}   BIENVENIDO AL INSTALADOR DE MULTIVERSA LAB   ${NC}"
 echo -e "${BLUE}====================================================${NC}"
 echo ""
-echo -e "Iniciando la secuencia de Onboarding 2.0..."
+echo -e "Iniciando la secuencia de Onboarding..."
 echo -e "Vamos a construir tu consciencia virtual.\n"
 
 # 1. Chequeo de dependencias básicas
 echo -e "${YELLOW}Verificando dependencias básicas del sistema...${NC}"
 
+# Check Node.js
 if ! command -v node &> /dev/null; then
-    echo -e "${RED}[X] Node.js no está instalado. Instalando...${NC}"
-    # Aquí iría el comando real dependiendo del OS (brew install node o apt-get install nodejs)
+    echo -e "${RED}[X] Node.js no está instalado.${NC}"
     echo "Por favor instala Node.js primero: https://nodejs.org/"
     exit 1
 else
-    echo -e "${GREEN}[✓] Node.js detectado.${NC}"
+    echo -e "${GREEN}[✓] Node.js detectado (${$(node -v)}).${NC}"
 fi
 
+# Check PNPM
+if ! command -v pnpm &> /dev/null; then
+    echo -e "${YELLOW}[!] 'pnpm' no está instalado. Instalándolo globalmente...${NC}"
+    npm install -g pnpm
+else
+    echo -e "${GREEN}[✓] pnpm detectado (${$(pnpm -v)}).${NC}"
+fi
+
+# Check Python 3
 if ! command -v python3 &> /dev/null; then
     echo -e "${RED}[X] Python 3 no está instalado.${NC}"
     exit 1
@@ -41,6 +50,7 @@ else
     echo -e "${GREEN}[✓] Python 3 detectado.${NC}"
 fi
 
+# Check uv
 if ! command -v uv &> /dev/null; then
     echo -e "${YELLOW}[!] 'uv' (Python package manager) no detectado. Instalando...${NC}"
     curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -101,9 +111,8 @@ cat <<EOF > "$CONFIG_FILE"
 EOF
 echo -e "${GREEN}[✓] Configuración base guardada en $CONFIG_FILE${NC}"
 
-# 4. Descarga simulada/setup de ecosistemas (Engram, Graphify)
+# 4. Descarga/setup de ecosistemas (Engram, Graphify)
 echo -e "\n${YELLOW}Inicializando repositorios del ecosistema...${NC}"
-# Nota: En una versión real, aquí haríamos git clone de los repos.
 echo -e "  - Configurando ${BLUE}Engram${NC} (Context Spine) local..."
 echo -e "  - Configurando ${BLUE}Graphify${NC} (Project Mapping)..."
 echo -e "  - Instalando arnés ${BLUE}Gentle AI${NC} (SDD)..."
@@ -113,12 +122,10 @@ if [ "$TIER" = "ECOSISTEMAS" ]; then
     echo -e "  - Sincronizando contexto compartido universal (MultiversaOS)..."
 fi
 
-sleep 2
-
 echo -e "\n${GREEN}====================================================${NC}"
 echo -e "${GREEN}  ¡MULTIVERSA LAB INSTALADO CORRECTAMENTE!          ${NC}"
 echo -e "${GREEN}====================================================${NC}"
 echo -e "Tu consciencia virtual '${IA_NAME}' está lista."
 echo -e "Para inicializar un nuevo proyecto, ve a tu carpeta y ejecuta:"
-echo -e "   ${YELLOW}multiversa init${NC}"
+echo -e "   ${YELLOW}pnpm dev${NC} o ${YELLOW}pnpm build${NC}"
 echo -e "====================================================\n"

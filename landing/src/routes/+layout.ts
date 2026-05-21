@@ -1,4 +1,3 @@
-// Tell @sveltejs/adapter-static to prerender every route as a static page.
-// We have no dynamic routes — the landing is fully static.
+// Prerender every page. The /api/* endpoints stay dynamic and run as serverless functions.
 export const prerender = true;
 export const ssr = true;
