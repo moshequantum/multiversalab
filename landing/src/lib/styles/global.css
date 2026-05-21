@@ -1,0 +1,196 @@
+/* ============================================================
+   MULTIVERSA LAB — Landing global styles
+   Builds on top of multiversa-tokens.css (the canonical brand CSS)
+   ============================================================ */
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--mv-background);
+}
+
+body {
+  min-height: 100vh;
+  /* Aurora-like radial glows, inspired by the DNA Brand deck */
+  background:
+    radial-gradient(ellipse 60% 80% at 15% 100%, rgba(189, 235, 52, 0.06), transparent 60%),
+    radial-gradient(ellipse 50% 70% at 90% 0%, rgba(168, 148, 255, 0.04), transparent 60%),
+    var(--mv-background);
+  background-attachment: fixed;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(189, 235, 52, 0.2); }
+
+.site {
+  max-width: var(--site-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px)  { .site { padding: 0 48px; } }
+@media (min-width: 1280px) { .site { padding: 0 80px; } }
+
+section {
+  position: relative;
+  padding: clamp(64px, 12vw, 128px) 0;
+}
+
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--mv-primary); }
+
+/* ============================================================
+   Pills (canonical from the DNA Brand) — px-3 py-1 rounded-full
+   border-primary/20 bg-primary/5 with chartreuse 1.5px dot + mono label
+   ============================================================ */
+.mv-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(189, 235, 52, 0.22);
+  background: rgba(189, 235, 52, 0.05);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--mv-primary);
+}
+.mv-pill::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--mv-primary);
+  box-shadow: 0 0 8px rgba(189, 235, 52, 0.6);
+}
+
+/* Brand wordmark used in nav + footer */
+.mv-brandmark {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--mv-ivory);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.mv-brandmark .dot {
+  width: 28px; height: 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #EEF6E8, #8C9088);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-block;
+}
+.mv-brandmark .lab { color: var(--mv-primary); }
+
+/* Two-beat headline pattern (canonical): primary line + italic chartreuse echo */
+.mv-two-beat {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: var(--tracking-tighter);
+  line-height: 0.95;
+  color: var(--mv-ivory);
+}
+.mv-two-beat em {
+  display: block;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--mv-primary);
+  opacity: 0.85;
+}
+
+/* Mono micro-label */
+.mv-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--mv-primary);
+}
+.mv-label-muted {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: rgba(250, 252, 232, 0.42);
+}
+
+/* Buttons */
+.mv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), background 180ms ease, border-color 180ms ease, box-shadow 240ms ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+.mv-btn-primary {
+  background: var(--mv-primary);
+  color: #050505;
+  box-shadow: var(--shadow-chartreuse);
+}
+.mv-btn-primary:hover {
+  transform: scale(1.04);
+  background: var(--mv-primary);
+  color: #050505;
+}
+.mv-btn-ghost {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--mv-ivory);
+}
+.mv-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--mv-ivory);
+}
+
+/* Glass cards */
+.mv-card {
+  position: relative;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 32px;
+  transition: border-color 240ms ease, transform 240ms ease, box-shadow 240ms ease;
+}
+.mv-card:hover {
+  border-color: rgba(255, 255, 255, 0.10);
+  transform: translateY(-2px);
+}
+
+/* Section header pattern (chrome-top style of the DNA Brand) */
+.mv-chrome-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Layout helpers */
+.mv-stack { display: flex; flex-direction: column; }
+.mv-stack-tight  { gap: 8px; }
+.mv-stack-md     { gap: 18px; }
+.mv-stack-lg     { gap: 32px; }

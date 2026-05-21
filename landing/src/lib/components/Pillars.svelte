@@ -1,0 +1,248 @@
+<script lang="ts">
+  // Pilares canónicos del Lab — DNA Brand slide 20 ("Aquí viven")
+  // Copy para Engram extraído del slide 40 ("README · primer párrafo")
+
+  type Pillar = {
+    glyph: '◎' | '⬡' | '✦';
+    glow: 'violet' | 'teal' | 'rose';
+    code: string;
+    layer: string;
+    name: string;
+    nameEn: string;
+    summary: string;
+    detail: string;
+    status: 'READY' | 'WIP' | 'ROADMAP';
+  };
+
+  const pillars: Pillar[] = [
+    {
+      glyph: '⬡',
+      glow: 'teal',
+      code: 'LAYER 01',
+      layer: 'MEMORY',
+      name: 'Engram',
+      nameEn: 'Memory',
+      summary: 'Capa de memoria con contexto separado por proyecto.',
+      detail: 'Guarda lo que decides, no lo que escribes. No reemplaza tu base de datos; recuerda por qué llegaste a ella.',
+      status: 'WIP'
+    },
+    {
+      glyph: '✦',
+      glow: 'rose',
+      code: 'LAYER 02',
+      layer: 'KNOWLEDGE',
+      name: 'Graphify',
+      nameEn: 'Knowledge map',
+      summary: 'Cualquier input a grafo de conocimiento navegable.',
+      detail: 'Ingestamos codebases, docs y sistemas enteros. Reduce token bloat, gana comprensión holística antes de proponer cambios.',
+      status: 'WIP'
+    },
+    {
+      glyph: '◎',
+      glow: 'violet',
+      code: 'LAYER 03',
+      layer: 'DISCIPLINE',
+      name: 'GentleAI',
+      nameEn: 'Discipline (SDD)',
+      summary: 'Spec-Driven Development como harness operacional.',
+      detail: 'Si no está documentado, no existe. Specs antes de código, tests antes de commit. Persona: el_gentleman.',
+      status: 'READY'
+    },
+    {
+      glyph: '✦',
+      glow: 'rose',
+      code: 'LAYER 04',
+      layer: 'PERSONAL',
+      name: 'GentlePI',
+      nameEn: 'Personal intelligence',
+      summary: 'La capa que amplifica al individuo o a la empresa.',
+      detail: 'Voz, contexto, decisiones humanas. La IA debería sonar como tú, no como ChatGPT.',
+      status: 'WIP'
+    },
+    {
+      glyph: '◎',
+      glow: 'violet',
+      code: 'LAYER 05',
+      layer: 'SIMULATION',
+      name: 'MiroFish',
+      nameEn: 'Predictive simulation',
+      summary: 'Simula antes de desplegar. Predice antes de decidir.',
+      detail: 'Inteligencia de enjambre para validar escenarios y optimizar estrategias. Tier Ecosistemas.',
+      status: 'ROADMAP'
+    },
+    {
+      glyph: '⬡',
+      glow: 'teal',
+      code: 'LAYER 06',
+      layer: 'INFRASTRUCTURE',
+      name: 'InsForge',
+      nameEn: 'Forge / Backend',
+      summary: 'La forja de infraestructura del laboratorio.',
+      detail: 'Backend, integraciones, auth y storage para que los cerebros de trabajo aterricen en producción sin reescribir cada vez.',
+      status: 'WIP'
+    }
+  ];
+</script>
+
+<section id="arquitectura" class="pillars">
+  <div class="site">
+
+    <div class="mv-chrome-top">
+      <span class="mv-label">Cap II · Arquitectura · Architecture</span>
+      <span class="mv-label-muted">03 / 06</span>
+    </div>
+
+    <div class="head">
+      <h2 class="mv-two-beat">
+        Aquí viven —
+        <em>los seis pilares del laboratorio.</em>
+      </h2>
+      <p class="lead">
+        Cada pilar es una capa con su propio alcance, su propia memoria
+        y su propio criterio. Se orquestan, no se confunden.
+      </p>
+    </div>
+
+    <div class="grid">
+      {#each pillars as p}
+        <article class="mv-card pillar glow-{p.glow}">
+          <header>
+            <span class="glyph glyph-{p.glow}">{p.glyph}</span>
+            <div class="codes">
+              <span class="mv-label">{p.code} · {p.layer}</span>
+              <span class="status status-{p.status.toLowerCase()}">
+                {p.status === 'READY' ? '✓ Listo' : p.status === 'WIP' ? '◐ En obra' : '○ Roadmap'}
+              </span>
+            </div>
+          </header>
+
+          <h3 class="name">
+            {p.name}
+            <em>— {p.nameEn}.</em>
+          </h3>
+
+          <p class="summary">{p.summary}</p>
+
+          <p class="detail">{p.detail}</p>
+        </article>
+      {/each}
+    </div>
+
+    <div class="foot">
+      <span class="mv-label-muted">También viven aquí · Skills · MCPs · Plugins · Schema validation · Taboo gates · Docs abiertas</span>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  :global(.pillars .mv-two-beat) {
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    max-width: 22ch;
+  }
+
+  .head { max-width: 880px; margin-bottom: 56px; }
+
+  .lead {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    line-height: 1.55;
+    color: rgba(250, 252, 232, 0.6);
+    margin: 24px 0 0;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 768px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1280px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .pillar { display: flex; flex-direction: column; gap: 18px; }
+
+  .pillar.glow-violet { box-shadow: 0 0 60px rgba(168, 148, 255, 0.04); }
+  .pillar.glow-teal   { box-shadow: 0 0 60px rgba(78, 205, 196, 0.04); }
+  .pillar.glow-rose   { box-shadow: 0 0 60px rgba(255, 107, 157, 0.04); }
+
+  .pillar:hover.glow-violet { box-shadow: 0 0 80px rgba(168, 148, 255, 0.12); }
+  .pillar:hover.glow-teal   { box-shadow: 0 0 80px rgba(78, 205, 196, 0.12); }
+  .pillar:hover.glow-rose   { box-shadow: 0 0 80px rgba(255, 107, 157, 0.12); }
+
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .glyph {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 2.75rem;
+    line-height: 1;
+  }
+  .glyph-violet { color: var(--mv-astursadeth); }
+  .glyph-teal   { color: var(--mv-aureon); }
+  .glyph-rose   { color: var(--mv-runa); }
+
+  .codes { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+
+  .status {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .status-ready    { color: var(--mv-primary); border-color: rgba(189, 235, 52, 0.25); background: rgba(189, 235, 52, 0.06); }
+  .status-wip      { color: var(--mv-orange); border-color: rgba(255, 159, 90, 0.22); background: rgba(255, 159, 90, 0.05); }
+  .status-roadmap  { color: rgba(250, 252, 232, 0.45); }
+
+  .name {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 2vw, 1.875rem);
+    line-height: 1.1;
+    color: var(--mv-ivory);
+    letter-spacing: -0.02em;
+  }
+  .name em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--mv-primary);
+    opacity: 0.7;
+  }
+
+  .summary {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.45;
+    color: var(--mv-ivory);
+    margin: 0;
+  }
+
+  .detail {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: rgba(250, 252, 232, 0.55);
+    margin: 0;
+    border-left: 2px solid rgba(255, 255, 255, 0.08);
+    padding-left: 14px;
+  }
+
+  .foot {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+  }
+</style>
