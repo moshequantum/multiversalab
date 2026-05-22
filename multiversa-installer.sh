@@ -34,10 +34,10 @@ else
     echo -e "${GREEN}[✓] Node.js detectado (${$(node -v)}).${NC}"
 fi
 
-# Check PNPM
+# Check PNPM (Multiversa policy: pnpm-only, npm is banned across the stack)
 if ! command -v pnpm &> /dev/null; then
-    echo -e "${YELLOW}[!] 'pnpm' no está instalado. Instalándolo globalmente...${NC}"
-    npm install -g pnpm
+    echo -e "${YELLOW}[!] 'pnpm' no está instalado. Instalándolo con el instalador oficial...${NC}"
+    curl -fsSL https://get.pnpm.io/install.sh | sh -
 else
     echo -e "${GREEN}[✓] pnpm detectado (${$(pnpm -v)}).${NC}"
 fi

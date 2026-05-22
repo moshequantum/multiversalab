@@ -34,8 +34,8 @@ Gentle AI configures agents with a **senior-architect-level persona**:
 For Pi-native agents, the `gentle-pi` package provides commands directly in the agent shell:
 
 ```bash
-# Install gentle-pi inside your project
-pi install npm:gentle-pi
+# Install gentle-pi inside your project (Multiversa policy: pnpm-only)
+pi install pnpm:gentle-pi   # if your Pi runtime supports the pnpm: namespace
 
 # Initialize SDD specifications
 /sdd-init

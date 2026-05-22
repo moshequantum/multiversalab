@@ -31,8 +31,10 @@ The connected InsForge project (`a7008540-cb30-4a9a-a28a-ab065ce4821b`) contains
 The TypeScript SDK is installed in the frontend workspace:
 
 ```bash
-npm install @insforge/sdk@latest
+pnpm add @insforge/sdk@latest
 ```
+
+> Multiversa policy: **pnpm only, npm is banned across the stack.**
 
 ### Client Initialization
 

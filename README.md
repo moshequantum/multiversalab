@@ -80,7 +80,7 @@ chmod +x multiversa-installer.sh
 
 ### Prerequisites for the engines themselves
 
-Depending on which engines you choose: **Go** (Engram, Gentle AI), **Python 3** with **pipx** (Graphify), **Node.js** with **pnpm** or **npm** (Gentle PI, codegraph), **Docker** (MiroFish, AGPL-3.0, external-only).
+Depending on which engines you choose: **Go** (Engram, Gentle AI), **Python 3** with **pipx** (Graphify), **Node.js** with **pnpm** (Gentle PI, codegraph), **Docker** (MiroFish, AGPL-3.0, external-only). Multiversa is **pnpm-only by policy** — npm is banned across the stack ([why](https://pnpm.io)).
 
 ### Developing the SvelteKit Frontend
 
