@@ -36,6 +36,33 @@ yarn-error.log*
 **/engram_db/*.db
 **/graphify_context/*.db
 
+# ⚠️ CLIENT DATA — GLOBAL POLICY (Moshe, 2026-05-21): no client data EVER
+# goes into Multiversa Lab. These patterns block accidental `git add`.
+**/*tenant_data*.sql
+**/*tenant_data*.json
+**/*tenant_rls*.sql
+**/*_cliente_*
+**/*_customer_*
+**/*_client_*
+**/credentials*.json
+**/credentials*.yaml
+**/credentials*.yml
+**/secrets*.json
+**/secrets*.yaml
+**/*.pem
+**/*.key
+**/service-account*.json
+docs/*_data_*.sql
+docs/*_rls_*.sql
+**/CALMA*
+**/cintia*
+**/larizzati*
+graphify-out/
+
+# Quarantine — never commit anything from a sibling _multiversa_private dir
+_multiversa_private/
+**/_multiversa_private/
+
 # InsForge & AI agent skills
 .insforge
 .agent
