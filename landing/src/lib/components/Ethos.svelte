@@ -24,7 +24,7 @@
     </h2>
 
     <p class="intro">
-      Seis principios sostienen todo lo que el laboratorio publica.
+      Seis principios sostienen todo lo que el grupo y el laboratorio construyen.
       Si una decisión los rompe, la decisión se cambia. No el principio.
     </p>
 

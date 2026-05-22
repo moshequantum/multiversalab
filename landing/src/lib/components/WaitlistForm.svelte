@@ -1,23 +1,76 @@
 <script lang="ts">
-  // Posts to /api/waitlist (server-side) so the InsForge admin key never reaches
-  // the client bundle. See landing/src/routes/api/waitlist/+server.ts.
-  let name = $state('');
-  let email = $state('');
-  let planInterest = $state('Lab (Open R&D)');
+  import { goto } from '$app/navigation';
+
+  type SparkPayload = {
+    name: string;
+    email: string;
+    company: string;
+    role: string;
+    pain_point: string;
+    current_tools: string;
+    budget_range: string;
+    urgency: string;
+    client_tier: string;
+  };
+
+  let form = $state<SparkPayload>({
+    name: '',
+    email: '',
+    company: '',
+    role: '',
+    pain_point: '',
+    current_tools: '',
+    budget_range: '',
+    urgency: '',
+    client_tier: ''
+  });
+
   let loading = $state(false);
-  let status: 'idle' | 'success' | 'error' = $state('idle');
+  let status: 'idle' | 'error' = $state('idle');
   let errorMessage = $state('');
 
-  const plans = [
-    'Lab (Open R&D)',
-    'Group (Commercial Spark)',
-    'Ecosistemas (Advanced Simulation)'
+  const budgetRanges = [
+    { value: '', label: 'Prefiero conversarlo en la llamada' },
+    { value: 'under_1k', label: 'Menos de $1.000' },
+    { value: '1k_3k', label: '$1.000 – $3.000' },
+    { value: '3k_7k', label: '$3.000 – $7.000' },
+    { value: '7k_plus', label: '$7.000+' }
   ];
+
+  const urgencyOptions = [
+    { value: '', label: 'Seleccioná una urgencia' },
+    { value: 'now', label: 'Necesito ordenar esto ahora' },
+    { value: '30_days', label: 'Quiero iniciar en los próximos 30 días' },
+    { value: 'quarter', label: 'Estoy planificando este trimestre' },
+    { value: 'exploring', label: 'Estoy explorando posibilidades' }
+  ];
+
+  const clientTiers = [
+    { value: '', label: 'Seleccioná el tipo de operación' },
+    { value: 'person', label: 'Persona / consultor / creador' },
+    { value: 'team', label: 'Equipo pequeño' },
+    { value: 'agency', label: 'Agencia / operación con clientes' },
+    { value: 'company', label: 'Empresa / unidad de negocio' }
+  ];
+
+  function hasRequiredFields() {
+    return Boolean(
+      form.name.trim() &&
+        form.email.trim() &&
+        form.company.trim() &&
+        form.role.trim() &&
+        form.pain_point.trim() &&
+        form.current_tools.trim() &&
+        form.urgency.trim() &&
+        form.client_tier.trim()
+    );
+  }
 
   async function handleSubmit(e: Event) {
     e.preventDefault();
-    if (!name || !email) {
-      errorMessage = 'Por favor, rellena todos los campos.';
+
+    if (!hasRequiredFields()) {
+      errorMessage = 'Completá los campos requeridos para preparar tu diagnóstico Spark.';
       status = 'error';
       return;
     }
@@ -30,20 +83,18 @@
       const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, plan_interest: planInterest })
+        body: JSON.stringify(form)
       });
       const data = await res.json();
 
       if (!data.ok) {
-        throw new Error(data.error || 'No pudimos registrarte ahora.');
+        throw new Error(data.error || 'No pudimos recibir tu solicitud ahora.');
       }
 
-      status = 'success';
-      name = '';
-      email = '';
+      await goto('/gracias');
     } catch (err: any) {
-      console.error('Waitlist submission error:', err);
-      errorMessage = err?.message || 'Error de red. Inténtalo de nuevo más tarde.';
+      console.error('Spark submission error:', err);
+      errorMessage = err?.message || 'Error de red. Intentá de nuevo en unos minutos.';
       status = 'error';
     } finally {
       loading = false;
@@ -51,85 +102,107 @@
   }
 </script>
 
-<section id="waitlist" class="waitlist-section">
+<section id="spark-form" class="spark-section">
   <div class="mv-liquid-glass-pro form-card">
     <div class="glow-orb" aria-hidden="true"></div>
 
     <div class="form-header">
-      <span class="mv-mono-label">Acceso Beta · Closed Access</span>
-      <h3 class="form-title">Founders Waitlist</h3>
+      <span class="mv-mono-label">Diagnóstico Spark · Entrada Comercial</span>
+      <h3 class="form-title">Solicitá tu diagnóstico Spark</h3>
       <p class="form-subtitle">
-        Únete al laboratorio técnico o solicita acceso temprano a la infraestructura comercial de <strong>Multiversa Group</strong>.
+        Contanos dónde estás, qué querés ordenar y qué herramientas usás. Con eso preparamos una llamada enfocada en convertir tu conocimiento, procesos y criterio en operación real.
       </p>
     </div>
 
-    {#if status === 'success'}
-      <div class="success-alert" role="alert">
-        <span class="success-glyph">✓</span>
-        <div class="success-text">
-          <h4>¡Registro Exitoso!</h4>
-          <p>Has sido añadido a la waitlist de Multiversa. Nos pondremos en contacto contigo pronto.</p>
+    <form onsubmit={handleSubmit} class="spark-form">
+      {#if status === 'error'}
+        <div class="error-alert" role="alert">
+          <span class="error-glyph">✕</span>
+          <p>{errorMessage}</p>
+        </div>
+      {/if}
+
+      <div class="form-grid two-columns">
+        <div class="input-group">
+          <label for="name">Nombre *</label>
+          <input id="name" type="text" placeholder="Tu nombre" bind:value={form.name} disabled={loading} required />
+        </div>
+
+        <div class="input-group">
+          <label for="email">Correo electrónico *</label>
+          <input id="email" type="email" placeholder="tu@empresa.com" bind:value={form.email} disabled={loading} required />
+        </div>
+
+        <div class="input-group">
+          <label for="company">Empresa / Proyecto *</label>
+          <input id="company" type="text" placeholder="Nombre de tu operación" bind:value={form.company} disabled={loading} required />
+        </div>
+
+        <div class="input-group">
+          <label for="role">Rol / Cargo *</label>
+          <input id="role" type="text" placeholder="Founder, CEO, consultor, director..." bind:value={form.role} disabled={loading} required />
         </div>
       </div>
-    {:else}
-      <form onsubmit={handleSubmit} class="waitlist-form">
-        {#if status === 'error'}
-          <div class="error-alert" role="alert">
-            <span class="error-glyph">✕</span>
-            <p>{errorMessage}</p>
-          </div>
-        {/if}
 
-        <div class="input-group">
-          <label for="name">Tu Nombre</label>
-          <input
-            id="name"
-            type="text"
-            placeholder="el_gentleman"
-            bind:value={name}
-            disabled={loading}
-            required
-          />
-        </div>
+      <div class="input-group">
+        <label for="pain_point">Problema principal *</label>
+        <textarea id="pain_point" rows="4" placeholder="¿Qué caos, cuello de botella o decisión querés resolver primero?" bind:value={form.pain_point} disabled={loading} required></textarea>
+      </div>
 
-        <div class="input-group">
-          <label for="email">Correo Electrónico</label>
-          <input
-            id="email"
-            type="email"
-            placeholder="gentleman@multiversa.group"
-            bind:value={email}
-            disabled={loading}
-            required
-          />
-        </div>
+      <div class="input-group">
+        <label for="current_tools">Herramientas actuales *</label>
+        <textarea id="current_tools" rows="4" placeholder="CRM, Notion, Drive, WhatsApp, Apollo, Cal.com, hojas de cálculo, IA, automatizaciones..." bind:value={form.current_tools} disabled={loading} required></textarea>
+      </div>
 
+      <div class="form-grid three-columns">
         <div class="input-group">
-          <label for="plan">Área de Interés</label>
+          <label for="budget_range">Presupuesto / Rango</label>
           <div class="select-wrapper">
-            <select id="plan" bind:value={planInterest} disabled={loading}>
-              {#each plans as plan}
-                <option value={plan}>{plan}</option>
+            <select id="budget_range" bind:value={form.budget_range} disabled={loading}>
+              {#each budgetRanges as option}
+                <option value={option.value}>{option.label}</option>
               {/each}
             </select>
           </div>
         </div>
 
-        <button type="submit" class="mv-btn mv-btn-primary submit-btn" disabled={loading}>
-          {#if loading}
-            <span class="spinner" aria-hidden="true"></span>
-            Procesando...
-          {:else}
-            Registrarse en la lista de espera →
-          {/if}
-        </button>
-      </form>
-    {/if}
+        <div class="input-group">
+          <label for="urgency">Urgencia *</label>
+          <div class="select-wrapper">
+            <select id="urgency" bind:value={form.urgency} disabled={loading} required>
+              {#each urgencyOptions as option}
+                <option value={option.value} disabled={option.value === ''}>{option.label}</option>
+              {/each}
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="client_tier">Tipo de operación *</label>
+          <div class="select-wrapper">
+            <select id="client_tier" bind:value={form.client_tier} disabled={loading} required>
+              {#each clientTiers as option}
+                <option value={option.value} disabled={option.value === ''}>{option.label}</option>
+              {/each}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="mv-btn mv-btn-primary submit-btn" disabled={loading}>
+        {#if loading}
+          <span class="spinner" aria-hidden="true"></span>
+          Enviando contexto...
+        {:else}
+          Enviar contexto y reservar Spark →
+        {/if}
+      </button>
+    </form>
   </div>
 </section>
 
 <style>
-  .waitlist-section {
+  .spark-section {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,7 +213,7 @@
 
   .form-card {
     width: 100%;
-    max-width: 580px;
+    max-width: 860px;
     padding: clamp(32px, 5vw, 48px);
     border-radius: var(--radius-xl);
     z-index: 2;
@@ -167,7 +240,7 @@
 
   .form-title {
     margin: 12px 0 16px;
-    font-size: clamp(2rem, 3.5vw, 2.5rem);
+    font-size: clamp(2rem, 3.5vw, 2.7rem);
     line-height: 1.1;
     letter-spacing: var(--tracking-tight);
     font-family: var(--font-serif);
@@ -175,19 +248,30 @@
   }
 
   .form-subtitle {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: rgba(250, 252, 232, 0.65);
-    margin: 0;
-  }
-  .form-subtitle strong {
-    color: var(--mv-primary);
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: rgba(250, 252, 232, 0.68);
+    margin: 0 auto;
+    max-width: 68ch;
   }
 
-  .waitlist-form {
+  .spark-form {
     display: flex;
     flex-direction: column;
     gap: 22px;
+  }
+
+  .form-grid {
+    display: grid;
+    gap: 18px;
+  }
+
+  .two-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .three-columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .input-group {
@@ -206,7 +290,8 @@
   }
 
   .input-group input,
-  .input-group select {
+  .input-group select,
+  .input-group textarea {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radius-sm);
@@ -217,12 +302,20 @@
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .input-group input::placeholder {
+  .input-group textarea {
+    resize: vertical;
+    min-height: 116px;
+    line-height: 1.5;
+  }
+
+  .input-group input::placeholder,
+  .input-group textarea::placeholder {
     color: rgba(250, 252, 232, 0.25);
   }
 
   .input-group input:focus,
-  .input-group select:focus {
+  .input-group select:focus,
+  .input-group textarea:focus {
     outline: none;
     border-color: var(--mv-primary);
     background: rgba(189, 235, 52, 0.02);
@@ -252,6 +345,7 @@
     padding-right: 40px;
     cursor: pointer;
   }
+
   .input-group select option {
     background: var(--mv-surface);
     color: var(--mv-ivory);
@@ -267,46 +361,6 @@
     border: none;
   }
 
-  .success-alert {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    background: rgba(189, 235, 52, 0.06);
-    border: 1px solid rgba(189, 235, 52, 0.2);
-    border-radius: var(--radius-md);
-    padding: 24px;
-    text-align: left;
-    animation: fadeIn 0.4s ease-out;
-  }
-
-  .success-glyph {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--mv-primary);
-    color: #000;
-    font-size: 16px;
-    font-weight: bold;
-    flex-shrink: 0;
-  }
-
-  .success-text h4 {
-    margin: 0 0 6px 0;
-    color: var(--mv-primary);
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-  }
-
-  .success-text p {
-    margin: 0;
-    color: rgba(250, 252, 232, 0.75);
-    font-size: 0.92rem;
-    line-height: 1.45;
-  }
-
   .error-alert {
     display: flex;
     align-items: center;
@@ -318,6 +372,10 @@
     text-align: left;
     color: var(--mv-destructive);
     font-size: 0.9rem;
+  }
+
+  .error-alert p {
+    margin: 0;
   }
 
   .error-glyph {
@@ -334,12 +392,6 @@
     flex-shrink: 0;
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Spinner */
   .spinner {
     width: 16px;
     height: 16px;
@@ -354,5 +406,12 @@
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+  @media (max-width: 820px) {
+    .two-columns,
+    .three-columns {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

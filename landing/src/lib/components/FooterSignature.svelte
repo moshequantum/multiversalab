@@ -5,12 +5,6 @@
 <footer class="footer">
   <div class="site stack-lg">
 
-    <div class="signal" aria-hidden="true">
-      <span class="g g-violet">◎</span>
-      <span class="g g-teal">⬡</span>
-      <span class="g g-rose">✦</span>
-    </div>
-
     <img
       src="/assets/multiversa-wordmark-light.svg"
       alt="Multiversa"
@@ -31,7 +25,7 @@
       <span class="sep">·</span>
       <a href="https://github.com/moshequantum/multiversalab/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener">Code of Conduct</a>
       <span class="sep">·</span>
-      <a href="mailto:soymoisesweb@gmail.com">soymoisesweb@gmail.com</a>
+      <a href="mailto:multiversagroup@gmail.com">multiversagroup@gmail.com</a>
     </div>
 
     <div class="meta">
@@ -57,19 +51,6 @@
     gap: 32px;
     text-align: center;
   }
-
-  .signal {
-    display: flex;
-    gap: 48px;
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(3rem, 7vw, 5rem);
-    line-height: 1;
-  }
-  .g-violet { color: var(--mv-astursadeth); }
-  .g-teal   { color: var(--mv-aureon); }
-  .g-rose   { color: var(--mv-runa); }
 
   .wordmark-img {
     height: clamp(40px, 7vw, 80px);
